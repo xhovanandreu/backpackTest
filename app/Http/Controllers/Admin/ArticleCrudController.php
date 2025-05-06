@@ -106,4 +106,54 @@ class ArticleCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+
+    /**
+     * Define what happens when the Update operation is loaded.
+     * 
+     * @see https://backpackforlaravel.com/docs/crud-operation-show
+     * @return void
+     */
+
+    protected function  setupShowOperation(){
+        // MAYBE: do stuff before the autosetup
+
+        // automatically add the columns
+        $this->autoSetupShowOperation();
+
+        // MAYBE: do stuff after the autosetup
+
+        // for example, let's add some new columns
+        CRUD::column([
+            'name'  => 'my_custom_html',
+            'label' => 'Custom HTML',
+            'type'  => 'custom_html',
+            'value' => '<span class="text-danger">Something</span><h1>This can be a header here</h1>',
+        ]);
+       
+        // this is for cutom html
+        // CRUD::column([
+        //     'name'  => 'tags_list_with_links',
+        //     'type'  => 'custom_html',
+        //     'label' => 'Tags',
+        //     'value' => function( $entry){
+        //         return $entry->getTagsListWithLinks();
+        //     },
+        // ]);
+
+
+        // this is to attach a simple link
+        // CRUD::column('tags')->label('tags')
+        // ->type('select_multiple')
+        // ->entity('tags')
+        // ->attribute('name')
+        // ->model(Tag::class)
+        // ->linkTo(fn($entry) => backpack_url("tag/{$entry->id}/show"));
+
+        CRUD::column('tags')->linkTo('tag.show');
+
+        
+        // or maybe remove a column
+        CRUD::column('text')->remove();
+    }
 }

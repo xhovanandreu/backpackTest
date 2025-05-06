@@ -32,6 +32,13 @@ class Article extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function getTagsListWithLinks()
+    {
+        return $this->tags->map(function ($tag) {
+            $url = backpack_url('tag/'.$tag->id.'/show');
+            return '<a href="'.$url.'">'.$tag->name.'</a>';
+        })->implode(', ');
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -41,9 +48,7 @@ class Article extends Model
 
     public function tags()
     {
-        // return $this->belongsToMany('App\Models\Tag', 'article_tag');
         return $this->belongsToMany(Tag::class);
-
     }
 
 
