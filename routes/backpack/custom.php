@@ -19,6 +19,11 @@ Route::group([
     Route::crud('user', 'UserCrudController');
     Route::crud('tag', 'TagCrudController');
     Route::crud('article', 'ArticleCrudController');
+    Route::crud('student', 'StudentCrudController');
+    Route::crud('classroom', 'ClassroomCrudController');
+    Route::crud('teacher', 'TeacherCrudController');
+    Route::crud('subject', 'SubjectCrudController');
+    Route::crud('enrollment', 'EnrollmentCrudController');
 }); // this should be the absolute last line of this file
 
 /**
