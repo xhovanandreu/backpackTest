@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ClassroomRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Events\ClassroomCreated;
+use App\Models\Classroom;
+use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
 
 /**
  * Class ClassroomCrudController
@@ -13,6 +16,11 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
  */
 class ClassroomCrudController extends CrudController
 {
+
+    use CreateOperation {
+        store as traitStore;
+    }
+
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
@@ -106,6 +114,22 @@ class ClassroomCrudController extends CrudController
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
          */
+
+
+        //  $classroom = $this->crud->entry;
+        //  event(new ClassroomCreated($classroom));
+
+    }
+
+
+    public function store()
+    {
+        $response = $this->traitStore(); // saves the classroom
+// dd( $this->crud->entry);
+        $classroom = $this->crud->entry; // now it's available
+        event(new ClassroomCreated($classroom)); // dispatch event with model
+
+        return $response;
     }
 
     /**
