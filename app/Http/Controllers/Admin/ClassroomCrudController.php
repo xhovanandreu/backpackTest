@@ -125,7 +125,6 @@ class ClassroomCrudController extends CrudController
     public function store()
     {
         $response = $this->traitStore(); // saves the classroom
-// dd( $this->crud->entry);
         $classroom = $this->crud->entry; // now it's available
         event(new ClassroomCreated($classroom)); // dispatch event with model
 
